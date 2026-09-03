@@ -46,6 +46,20 @@ npm run start:http
 
 The built-in HTTP server intentionally accepts loopback only. ChatGPT Web needs a remotely reachable HTTPS MCP endpoint, so production deployment should put authenticated HTTPS/tunnel infrastructure in front rather than exposing this process directly.
 
+## ChatGPT Web via Secure MCP Tunnel
+
+This checkout can reuse the OpenAI `tunnel-client` binary already installed by the sibling `ChatGPTMCP` project. Create a dedicated OpenAI tunnel named **ChatGPT Skill Hub**, then run:
+
+```powershell
+.\scripts\setup-tunnel.ps1 -TunnelId 'tunnel_...'
+.\scripts\start-tunnel.ps1
+.\scripts\status-tunnel.ps1
+```
+
+`setup-tunnel.ps1` stores the runtime key with Windows DPAPI under `.tunnel/` (git-ignored). The managed MCP command uses stdio and points directly at the local `chatgpt-skills` checkout. Stop it with `.\scripts\stop-tunnel.ps1`.
+
+Then in ChatGPT Web, enable Developer mode, create/select the tunnel-backed app, scan tools, and verify `skill_stats`, `skill_search`, `skill_read`, and `skill_resolve`.
+
 ## Example flow
 
 ```text

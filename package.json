@@ -15,7 +15,9 @@
     "start:http": "tsx src/index.ts --http",
     "typecheck": "tsc --noEmit",
     "test": "node --import tsx --test test/**/*.test.ts",
-    "verify": "npm run typecheck && npm test"
+    "verify": "npm run typecheck && npm test && npm run build",
+    "build": "tsc",
+    "start:dist": "node dist/src/index.js --stdio"
   },
   "dependencies": {
     "@modelcontextprotocol/node": "^2.0.0",

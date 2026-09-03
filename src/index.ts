@@ -7,8 +7,13 @@ import { localhostHostValidation, localhostOriginValidation, toNodeHandler } fro
 import { SkillRegistry } from './registry.js';
 import { createSkillHubServer } from './server.js';
 
+function argumentValue(name: string): string | undefined {
+  const index = process.argv.indexOf(name);
+  return index >= 0 ? process.argv[index + 1] : undefined;
+}
+
 function skillsRoot(): string {
-  return path.resolve(process.env.SKILLS_ROOT ?? path.join(process.cwd(), '..', 'chatgpt-skills'));
+  return path.resolve(argumentValue('--skills-root') ?? process.env.SKILLS_ROOT ?? path.join(process.cwd(), '..', 'chatgpt-skills'));
 }
 
 const registry = new SkillRegistry(skillsRoot());
