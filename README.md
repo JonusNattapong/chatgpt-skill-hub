@@ -56,7 +56,7 @@ This checkout can reuse the OpenAI `tunnel-client` binary already installed by t
 .\scripts\status-tunnel.ps1
 ```
 
-`setup-tunnel.ps1` stores the runtime key with Windows DPAPI under `.tunnel/` (git-ignored). The managed MCP command uses stdio and points directly at the local `chatgpt-skills` checkout. Stop it with `.\scripts\stop-tunnel.ps1`.
+Create the key from OpenAI **Runtime API keys** (`https://platform.openai.com/settings/organization/api-keys`) and ensure the key principal has **Tunnels Read + Use**. `setup-tunnel.ps1` validates the key against the selected tunnel before saving it, stores it with Windows DPAPI under `.tunnel/` (git-ignored), and keeps a timestamped backup when replacing an existing DPAPI file. `start-tunnel.ps1` prefers an existing `CONTROL_PLANE_API_KEY` process environment variable and otherwise falls back to the DPAPI key. The managed MCP command uses stdio and points directly at the local `chatgpt-skills` checkout. Stop it with `.\scripts\stop-tunnel.ps1`.
 
 Then in ChatGPT Web, enable Developer mode, create/select the tunnel-backed app, scan tools, and verify `skill_stats`, `skill_search`, `skill_read`, and `skill_resolve`.
 
